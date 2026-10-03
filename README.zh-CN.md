@@ -2,8 +2,9 @@
 
 [English](README.md)
 
-ResourceReplacer 是 MetaHook 的模型与声音资源替换插件，支持全局和地图级
-`.gmr` / `.gsr` 规则及正则表达式。插件在运行时重定向资源路径，不修改原始资源文件。
+ResourceReplacer 是 MetaHook 的模型与声音资源替换插件，支持全局和地图级 `.gmr` / `.gsr` 规则及正则表达式。
+
+插件仅在游戏运行时重定向资源路径，不修改原始资源文件。
 
 ## 安装
 
@@ -60,26 +61,6 @@ manifest 声明了 11 个引擎快照。不支持的引擎或缺失的必需符�
 ```bat
 python scripts\validate-gamedata.py install\x86\Release\svencoop\metahook\gamedata\resourcereplacer --manifest scripts\manifests\resourcereplacer.json
 ```
-
-## CI/CD
-
-LiveBuild 在 `main` 的 push、pull request 和手动触发时运行；Release 在推送 `v*` 标签时运行。
-二者共用 Windows x86 Release 构建 action，获取 MetaHook SDK 及 Capstone 子模块，
-构建并安装插件，校验安装后的 gamedata，再创建并检查 `ResourceReplacer-windows-x86.7z`。
-压缩包的 `svencoop/` 目录包含 DLL、PDB 和插件 gamedata。
-
-## 验证记录
-
-2026-10-03 使用 VS 2022（MSVC 19.44）、CMake 3.31.12 和 Python 3.12.5 完成本地验证：
-
-- 本地 SDK 的 Debug、Release 构建及安装，以及自动获取固定 SDK 和 Capstone 头文件的 Release 构建。
-- 每次构建的 11 个 gamedata 快照均在构建目录和安装目录通过校验。
-- Debug、Release DLL 均为 x86，导出 `CreateInterface`，不依赖 Capstone DLL。
-- Release 压缩包包含 DLL、PDB 和 catalog，通过 `7z t` 检查。
-- 无效 SDK 路径和 x64 配置按预期报错；复制的 11 个源码与头文件的 SHA256 与原目录一致。
-
-Release 编译时 SDK 的 `minidump.cpp` 出现 C4535 警告，编译和链接成功。
-构建日志保存在已忽略的 `build/verification/` 目录。实际游戏加载、资源替换及线上 GitHub Actions 尚未运行。
 
 ## 许可证
 

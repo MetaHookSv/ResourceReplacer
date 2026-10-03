@@ -2,9 +2,9 @@
 
 [中文文档](README.zh-CN.md)
 
-ResourceReplacer is a MetaHook plugin that redirects model and sound loading through
-global and map-specific `.gmr` / `.gsr` rules, including regular expressions.
-It replaces resource paths at runtime without modifying the original files.
+ResourceReplacer is a MetaHook plugin that redirects model and sound loading through global and map-specific `.gmr` / `.gsr` rules, with regular expressions support.
+
+It replaces resource paths only at runtime, without modifying the original files.
 
 ## Install
 
@@ -67,28 +67,6 @@ provide a compatible catalog yourself when installing. To validate the installed
 ```bat
 python scripts\validate-gamedata.py install\x86\Release\svencoop\metahook\gamedata\resourcereplacer --manifest scripts\manifests\resourcereplacer.json
 ```
-
-## CI/CD
-
-LiveBuild runs on pushes and pull requests to `main`, and on manual dispatch.
-Release runs on `v*` tags. Both use the shared Windows x86 Release build action,
-clone the MetaHook SDK and its Capstone submodule, build and install the plugin,
-validate the installed gamedata, and create and test `ResourceReplacer-windows-x86.7z`.
-The archive contains the DLL, PDB and plugin gamedata under `svencoop/`.
-
-## Verification
-
-Verified locally on 2026-10-03 with VS 2022 (MSVC 19.44), CMake 3.31.12 and Python 3.12.5:
-
-- Local SDK Debug and Release builds and installs; Release with automatically fetched, pinned SDK and Capstone headers.
-- All 11 gamedata snapshots validated in both build and install directories for each build.
-- Debug and Release DLLs report x86 and export `CreateInterface`, with no Capstone DLL dependency.
-- The Release archive contains the DLL, PDB and catalog and passes `7z t`.
-- Invalid SDK paths and x64 configurations fail with the intended diagnostics; all 11 copied source/header files match the original SHA256 hashes.
-
-The Release SDK compilation reports C4535 in `minidump.cpp`; compilation and linking succeed.
-Build logs are kept in the ignored `build/verification/` directory. Actual game loading,
-resource replacement and hosted GitHub Actions have not been run.
 
 ## License
 
