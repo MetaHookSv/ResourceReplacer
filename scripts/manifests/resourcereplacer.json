@@ -1,0 +1,36 @@
+{
+  "schemaVersion": 1,
+  "name": "resourcereplacer",
+  "indexUrl": "https://hlnd2t.github.io/GoldSrc_VibeSignatures/gamesymbols/index.json",
+  "gameVersions": [
+    "cof-5936",
+    "hl-10210",
+    "hl-3248",
+    "hl-3266",
+    "hl-3329",
+    "hl-3647",
+    "hl-4554",
+    "hl-6153",
+    "hl-8684",
+    "svencoop-10257",
+    "svencoop-8948"
+  ],
+  "symbols": {
+    "engine": {
+      "FS_Open": "function",
+      "CL_PrecacheResources": "function",
+      "S_LoadSound_to_FS_Open_callsite_0": "patch",
+      "Mod_LoadModel_to_FS_Open_callsite_0": "patch"
+    }
+  },
+  "numberedPatchSets": [
+    {
+      "module": "engine",
+      "prefix": "S_LoadSound_to_FS_Open_callsite"
+    },
+    {
+      "module": "engine",
+      "prefix": "Mod_LoadModel_to_FS_Open_callsite"
+    }
+  ]
+}
