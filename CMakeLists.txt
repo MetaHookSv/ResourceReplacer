@@ -60,13 +60,13 @@ install(TARGETS ResourceReplacer RUNTIME DESTINATION svencoop/metahook/plugins)
 install(FILES "$<TARGET_PDB_FILE:ResourceReplacer>" DESTINATION svencoop/metahook/plugins)
 
 option(RESOURCEREPLACER_SYNC_GAMEDATA "Download and prune ResourceReplacer's gamedata catalog before building" ON)
-set(RESOURCEREPLACER_GAMEDATA_DIR "${CMAKE_BINARY_DIR}/assets/svencoop/metahook/gamedata/resourcereplacer" CACHE PATH "ResourceReplacer gamedata catalog directory")
+set(RESOURCEREPLACER_GAMEDATA_DIR "${PROJECT_BINARY_DIR}/assets/svencoop/metahook/gamedata/resourcereplacer" CACHE PATH "ResourceReplacer gamedata catalog directory")
 if(RESOURCEREPLACER_SYNC_GAMEDATA)
     find_package(Python3 REQUIRED COMPONENTS Interpreter)
     add_custom_target(ResourceReplacerGameData
         COMMAND "${Python3_EXECUTABLE}" "${CMAKE_CURRENT_SOURCE_DIR}/scripts/sync-gamedata.py"
             --manifest "${CMAKE_CURRENT_SOURCE_DIR}/scripts/manifests/resourcereplacer.json"
-            --target-dir "${RESOURCEREPLACER_GAMEDATA_DIR}" --temp-root "${CMAKE_BINARY_DIR}/gamedata-sync"
+            --target-dir "${RESOURCEREPLACER_GAMEDATA_DIR}" --temp-root "${PROJECT_BINARY_DIR}/gamedata-sync"
         COMMENT "Synchronizing and validating ResourceReplacer gamedata"
         VERBATIM)
     add_custom_target(ResourceReplacerGameDataValidate
