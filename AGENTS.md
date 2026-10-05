@@ -232,18 +232,23 @@ Runtime configuration: `ResourceReplacer.dll` must be listed in the host's `meta
 ## FAQ
 
 ### Q: Why is a replacement silently refused?
+
 A: The replacement's extension must equal the source's (`V_GetFileExtension` + `stricmp`), checked in both entry types. A `.mdl` rule pointing at a `.wav` is dropped, which is what prevents cross-type resource replacement. Note this is a *rejection*, not an error message.
 
 ### Q: Why does nothing happen for a resource the engine loads?
+
 A: Replacement is limited to the `S_LoadSound` and `Mod_LoadModel` `FS_Open` call sites recorded in gamedata, and only for `pOptions == "rb"` (`strcmp`, case-sensitive). Any other caller or mode passes through untouched.
 
 ### Q: Does the plugin verify that the replacement file exists?
+
 A: No. It rewrites the path and lets the engine's own load fail if the target is missing; nothing is logged by the plugin. Verify your replacement assets exist before shipping rules.
 
 ### Q: Why write `"models/v_(.*)\\.mdl"` with a double backslash?
+
 A: Inside quotes the parser reads names with `std::quoted`, which discards the escape character before *any* following character: `\.` arrives at `std::regex` as `.` (an unescaped wildcard), while `\\.` arrives as `\.`. Unquoted tokens are not unescaped, so there a single backslash already survives. Prefer the doubled form, and prefer quotes, so the rule reads the same in both spellings.
 
 ### Q: Does a successful build prove a rule works?
+
 A: No. There is no test suite here, so a green configure/build says nothing about whether a call site resolves or a rule matches at runtime. Claims about in-game behavior require evidence from a real game run. Documentation changes need content, path and format checks, not a plugin rebuild.
 
 ## Repository Rules
