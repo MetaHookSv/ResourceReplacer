@@ -35,7 +35,7 @@ scripts\build-ResourceReplacer-x86-Debug.bat
 构建目录为 `build/x86/<Configuration>`，DLL、PDB 和 gamedata 安装到
 `install/x86/<Configuration>/svencoop/metahook`。脚本不会向本地游戏目录部署文件。
 
-首次配置会获取固定 commit 的 MetaHook SDK、所需的 Capstone 头文件，
+首次配置会获取最新 `main` 的 MetaHook SDK、所需的 Capstone 头文件，
 以及经过 SHA256 校验的 VC-LTL 5.3.1 二进制包；后者缓存于 `thirdparty/cache`。
 SDK 只作为输入，不构建 launcher。显式编译清单保留原工程的 5 个插件和 25 个 SDK 编译单元，
 使用 C++20 和静态 CRT。Capstone 仅提供 MetaHook API 所需类型，不链接其库。
