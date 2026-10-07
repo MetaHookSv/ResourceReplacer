@@ -263,7 +263,7 @@ A: No. There is no test suite here, so a green configure/build says nothing abou
 
 ## Related Links
 
-- **MetaHookSV**: https://github.com/hzqst/MetaHookSv
+- **MetaHookSV**: https://github.com/MetaHookSv/MetaHookSv
 - **Gamedata symbol catalog**: https://hlnd2t.github.io/GoldSrc_VibeSignatures/
 - **Sven Co-op gmr guide**: https://wiki.svencoop.com/Mapping/Model_Replacement_Guide
 - **Sven Co-op gsr guide**: https://wiki.svencoop.com/Mapping/Sound_Replacement_Guide
