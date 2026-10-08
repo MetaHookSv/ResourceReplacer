@@ -6,31 +6,31 @@
 
 #include "ResourceReplacer.h"
 
-cl_enginefunc_t gEngfuncs = {0};
-engine_studio_api_t IEngineStudio = {0};
-r_studio_interface_t **gpStudioInterface = NULL;
-IKeyValuesSystem* g_pKeyValuesSystem = NULL;
+cl_enginefunc_t        gEngfuncs          = {0};
+engine_studio_api_t    IEngineStudio      = {0};
+r_studio_interface_t** gpStudioInterface  = NULL;
+IKeyValuesSystem*      g_pKeyValuesSystem = NULL;
 
 int HUD_VidInit(void)
 {
-	ModelReplacer()->FreeMapEntries();
-	SoundReplacer()->FreeMapEntries();
+    ModelReplacer()->FreeMapEntries();
+    SoundReplacer()->FreeMapEntries();
 
-	return gExportfuncs.HUD_VidInit();
+    return gExportfuncs.HUD_VidInit();
 }
 
 void HUD_Init(void)
 {
-	ModelReplacer()->LoadGlobalReplaceList("resreplacer/default_global.gmr");
-	SoundReplacer()->LoadGlobalReplaceList("resreplacer/default_global.gsr");
+    ModelReplacer()->LoadGlobalReplaceList("resreplacer/default_global.gmr");
+    SoundReplacer()->LoadGlobalReplaceList("resreplacer/default_global.gsr");
 
-	gExportfuncs.HUD_Init();
+    gExportfuncs.HUD_Init();
 }
 
 void HUD_Shutdown(void)
 {
-	ModelReplacer()->Shutdown();
-	SoundReplacer()->Shutdown();
+    ModelReplacer()->Shutdown();
+    SoundReplacer()->Shutdown();
 
-	return gExportfuncs.HUD_Shutdown();
+    return gExportfuncs.HUD_Shutdown();
 }
