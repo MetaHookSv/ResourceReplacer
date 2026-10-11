@@ -52,7 +52,9 @@ target_compile_options(resourcereplacer_settings INTERFACE /permissive
     /wd4311 /wd4312 /wd4819 /wd4996)
 
 include(cmake/Sources.cmake)
+include(cmake/SourceGroups.cmake)
 add_library(ResourceReplacer SHARED ${RESOURCEREPLACER_SOURCES})
+resourcereplacer_assign_source_groups(ResourceReplacer)
 target_link_libraries(ResourceReplacer PRIVATE resourcereplacer_settings)
 target_compile_options(ResourceReplacer PRIVATE /MP /Zi)
 target_link_options(ResourceReplacer PRIVATE /DEBUG /SUBSYSTEM:WINDOWS
