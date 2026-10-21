@@ -261,6 +261,14 @@ A: No. There is no test suite here, so a green configure/build says nothing abou
 - MSVC x86 only. Keep the static CRT / VC-LTL, C++20 (`cxx_std_20`) and warning-level settings in `CMakeLists.txt` in sync with the other standalone plugin repositories
 - `README.md` / `README.zh-CN.md` and `docs/en/` / `docs/zh-CN/` are pairs: keep install steps, rule syntax and build options consistent across both languages
 
+## C/C++ formatting
+
+Owned C/C++ sources use the shared DiligentCore style from
+[MetaHookSv/FormatValidation](https://github.com/MetaHookSv/FormatValidation), pinned
+to clang-format 23.1.3. Setup, commands and the checked scope are recorded in
+`memory/CppFormatting.md` (`CppFormatting`). Do not hand-edit the generated
+`.clang-format`; change the shared style. Keep MSVC inline assembly in explicit blocks.
+
 ## Related Links
 
 - **MetaHookSV**: https://github.com/MetaHookSv/MetaHookSv
