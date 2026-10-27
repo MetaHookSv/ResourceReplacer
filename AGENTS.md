@@ -27,15 +27,13 @@ ResourceReplacer/
 ├── cmake/
 │   ├── Sources.cmake          # Explicit compile list: 5 plugin + 25 SDK units
 │   ├── Dependencies.cmake     # Source-path resolution and FetchContent fallback
-│   ├── LaunchGame.cmake       # Optional F5 deploy support
-│   └── VCLTL.cmake            # VC-LTL 5.3.1
+│   └── LaunchGame.cmake       # Optional F5 deploy support
 ├── scripts/
 │   ├── build-ResourceReplacer-x86-{Debug,Release}.bat
 │   ├── manifests/resourcereplacer.json # Gamedata manifest (2 functions + 2 numbered patch sets)
 │   ├── sync-gamedata.py                # Prunes the upstream catalog into the build tree
 │   └── validate-gamedata.py            # Validates it before the plugin target builds
 ├── docs/en/, docs/zh-CN/      # Bilingual pages: features.md (rule syntax), debugging.md (F5)
-├── thirdparty/cache/          # Ignored VC-LTL binary cache
 ├── build/x86/<configuration>/    # Ignored build output
 ├── install/x86/<configuration>/  # Ignored install output
 ├── README.md, README.zh-CN.md # Bilingual install / build documentation
@@ -146,7 +144,7 @@ original CL_PrecacheResources()
 
 ## Build Instructions
 
-Requirements: Windows, Visual Studio 2022 with C++ tools, CMake 3.21 or newer, Git, Python 3.8 or newer, MSVC x86 (`-A Win32`), C++20, static CRT (`MultiThreaded`), `_MBCS`, `NO_MALLOC_OVERRIDE`, `NO_VCR` and VC-LTL 5.3.1.
+Requirements: Windows, Visual Studio 2022 with C++ tools, CMake 3.21 or newer, Git, Python 3.8 or newer, MSVC x86 (`-A Win32`), C++20, static CRT (`MultiThreaded`), `_MBCS`, `NO_MALLOC_OVERRIDE` and `NO_VCR`.
 
 ```bat
 scripts\build-ResourceReplacer-x86-Release.bat
@@ -160,7 +158,6 @@ The scripts configure, build and install, forwarding extra CMake arguments. Debu
 - **MetaHook SDK**: fetched automatically from the latest `main`; pass `-DMETAHOOK_SOURCE_PATH=D:\MetaHook` or export the same environment variable to build against a local tree. The path is the repository root providing `include/metahook.h`, `include/HLSDK`, `include/Interface` and `include/SourceSDK`. The SDK is consumed without building the launcher
 - **SourceSDK units**: 25 `tier0` / `tier1` / `vstdlib` compilation units are compiled from the SDK tree (see `cmake/Sources.cmake`), providing `V_GetFileExtension` and friends. They are not edited in place and nothing is linked as a library
 - **Capstone headers**: resolve from `CAPSTONE_INCLUDE_DIRS` / `RESOURCEREPLACER_CAPSTONE_INCLUDE_DIRS`, else the SDK's `thirdparty/capstone_fork`, else a pinned checkout. **Capstone is not linked**; its types are used through the MetaHook API
-- **VC-LTL 5.3.1**: downloaded once into `thirdparty/cache`, SHA256-verified
 
 Keep `cmake/Sources.cmake` as the explicit compile list (5 plugin + 25 SDK units); `include/HLSDK/common/interface.cpp` is compiled in because `EXPOSE_SINGLE_INTERFACE` (which exports `CreateInterface`) lives there.
 
@@ -258,7 +255,7 @@ A: No. There is no test suite here, so a green configure/build says nothing abou
 - Keep rule parsing behavior stable: optional quotes, `#`/`/` comment lines skipped, the third token `regex` selecting the regex entry, map rules before global rules
 - When gamedata usage changes, update `scripts/manifests/resourcereplacer.json` in the same change, including `numberedPatchSets` when a numbered call-site family changes
 - Do not modify external or third-party sources. MetaHook and Capstone are read-only build inputs; SourceSDK units are compiled from the SDK tree, never edited in place
-- MSVC x86 only. Keep the static CRT / VC-LTL, C++20 (`cxx_std_20`) and warning-level settings in `CMakeLists.txt` in sync with the other standalone plugin repositories
+- MSVC x86 only. Keep the static CRT, C++20 (`cxx_std_20`) and warning-level settings in `CMakeLists.txt` in sync with the other standalone plugin repositories
 - `README.md` / `README.zh-CN.md` and `docs/en/` / `docs/zh-CN/` are pairs: keep install steps, rule syntax and build options consistent across both languages
 
 ## C/C++ formatting

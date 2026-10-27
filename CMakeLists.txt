@@ -21,7 +21,6 @@ endif()
 
 include(cmake/Dependencies.cmake)
 resourcereplacer_prepare_dependencies()
-include("${VC_LTL_Root}/VC-LTL helper for cmake.cmake")
 
 # Include directories and definitions follow ResourceReplacer.vcxproj.
 add_library(resourcereplacer_settings INTERFACE)
